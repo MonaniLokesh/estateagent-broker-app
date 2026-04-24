@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "EstateAgent Broker",
+    "slug": "estateagent-broker-app",
+    "scheme": "estateagentbroker",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

@@ -1,0 +1,19 @@
+# Normalize line endings for the whole repo (reliable across Windows / macOS / Linux).
+* text=auto eol=lf
+
+# Scripts Windows runs outside Git Bash should keep CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Do not let Git treat these as text.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
