@@ -53,15 +53,6 @@ export default function TabsLayout() {
           tabBarIcon: ({ color }) => <MaterialIcons name="groups" size={22} color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="add-property"
-        options={{
-          title: "Add",
-          href: null,
-          tabBarStyle: { display: "none" },
-          tabBarIcon: ({ color }) => <MaterialIcons name="add-circle" size={22} color={color} />,
-        }}
-      />
     </Tabs>
   );
 }
