@@ -1,7 +1,36 @@
 import * as SecureStore from "expo-secure-store";
 import { router } from "expo-router";
+import { Platform } from "react-native";
 
 export const AUTH_TOKEN_KEY = "auth_token";
+
+const isWeb = Platform.OS === "web";
+
+async function secureGet(key: string): Promise<string | null> {
+  if (isWeb) {
+    if (typeof window === "undefined") return null;
+    return window.localStorage.getItem(key);
+  }
+  return SecureStore.getItemAsync(key);
+}
+
+async function secureSet(key: string, value: string): Promise<void> {
+  if (isWeb) {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(key, value);
+    return;
+  }
+  await SecureStore.setItemAsync(key, value);
+}
+
+async function secureDelete(key: string): Promise<void> {
+  if (isWeb) {
+    if (typeof window === "undefined") return;
+    window.localStorage.removeItem(key);
+    return;
+  }
+  await SecureStore.deleteItemAsync(key);
+}
 
 export class ApiError extends Error {
   constructor(
@@ -54,19 +83,19 @@ export function formatApiErrorDetail(data: unknown): string {
 
 export async function getStoredToken(): Promise<string | null> {
   try {
-    return await SecureStore.getItemAsync(AUTH_TOKEN_KEY);
+    return await secureGet(AUTH_TOKEN_KEY);
   } catch {
     return null;
   }
 }
 
 export async function setStoredToken(token: string): Promise<void> {
-  await SecureStore.setItemAsync(AUTH_TOKEN_KEY, token);
+  await secureSet(AUTH_TOKEN_KEY, token);
 }
 
 export async function clearStoredToken(): Promise<void> {
   try {
-    await SecureStore.deleteItemAsync(AUTH_TOKEN_KEY);
+    await secureDelete(AUTH_TOKEN_KEY);
   } catch {
     // ignore if missing
   }
