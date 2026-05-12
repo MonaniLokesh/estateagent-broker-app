@@ -10,8 +10,10 @@ import { formatCompactInr } from "@/lib/formatInr";
 import { statusPillFromMetadata } from "@/lib/propertyDisplay";
 import type { Property } from "@/types";
 import { ApiError } from "@/lib/api";
+import { useAddPropertyOverlay } from "@/lib/addPropertyOverlay";
 
 export default function DashboardScreen() {
+  const { openOverlay } = useAddPropertyOverlay();
   const [summaryLoading, setSummaryLoading] = useState(true);
   const [summaryError, setSummaryError] = useState<string | null>(null);
   const [summary, setSummary] = useState<{
@@ -159,7 +161,7 @@ export default function DashboardScreen() {
             )}
           </View>
 
-          <Pressable className="mb-10" onPress={() => router.push("/add-property") as never}>
+          <Pressable className="mb-10" onPress={() => openOverlay()}>
             <LinearGradient
               colors={["#006c49", "#10b981"]}
               start={{ x: 0, y: 0 }}

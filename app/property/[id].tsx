@@ -9,10 +9,12 @@ import { formatCompactInr, formatRelativeListed } from "@/lib/formatInr";
 import { statusPillFromMetadata } from "@/lib/propertyDisplay";
 import type { Property } from "@/types";
 import { ApiError } from "@/lib/api";
+import { useAddPropertyOverlay } from "@/lib/addPropertyOverlay";
 
 export default function PropertyDetailScreen() {
   const { id } = useLocalSearchParams<{ id?: string | string[] }>();
   const propertyId = (Array.isArray(id) ? id[0] : id) ?? "";
+  const { openOverlay } = useAddPropertyOverlay();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -72,7 +74,7 @@ export default function PropertyDetailScreen() {
   };
 
   const handleEditProperty = () => {
-    router.push(`/add-property?id=${encodeURIComponent(propertyId)}` as never);
+    openOverlay(propertyId);
   };
 
   const gallery = property?.metadata?.images?.filter(Boolean) ?? [];

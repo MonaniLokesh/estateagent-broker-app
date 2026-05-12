@@ -8,10 +8,12 @@ import { formatCompactInr } from "@/lib/formatInr";
 import { filterLabelToApiStatus, propertySpecs, statusPillFromMetadata } from "@/lib/propertyDisplay";
 import type { Property } from "@/types";
 import { ApiError } from "@/lib/api";
+import { useAddPropertyOverlay } from "@/lib/addPropertyOverlay";
 
 const filters = ["All", "Available", "Under Offer", "Sold"];
 
 export default function PropertiesScreen() {
+  const { openOverlay } = useAddPropertyOverlay();
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -192,7 +194,7 @@ export default function PropertiesScreen() {
 
       <Pressable
         className="absolute bottom-28 right-6 h-14 w-14 items-center justify-center rounded-full bg-primary"
-        onPress={() => router.push("/add-property") as never}
+        onPress={() => openOverlay()}
       >
         <MaterialIcons name="add" size={30} color="#fff" />
       </Pressable>
